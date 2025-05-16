@@ -54,6 +54,6 @@ lapBtn.addEventListener("click", () => {
     const lapTime = display.innerText;
     const p = document.createElement("p");
     p.innerText = `Lap: ${lapTime}`;
-    laps.prepend();
+    laps.prepend(p);
   }
 });
