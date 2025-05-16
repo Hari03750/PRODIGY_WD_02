@@ -5,46 +5,59 @@ let resetBtn = document.getElementById("reset");
 let lapBtn = document.getElementById("lap");
 let laps = document.getElementById("laps");
 
-let timer = null;
+let display = document.getElementById("display");
+let startStopBtn = document.getElementById("startStop");
+let resetBtn = document.getElementById("reset");
+let lapBtn = document.getElementById("lap");
+let laps = document.getElementById("laps");
+
+let startTime = 0;
+let elapsedTime = 0;
+let timerInterval = null;
 let isRunning = false;
 
-function updateDisplay() {
-  let h = hours < 10 ? "0" + hours : hours;
-  let m = minutes < 10 ? "0" + minutes : minutes;
-  let s = seconds < 10 ? "0" + seconds : seconds;
-  display.innerText = `${h}:${m}:${s}`;
+function pad(num) {
+  return num.toString().padStart(2, "0");
 }
 
-function stopwatch() {
-  seconds++;
-  if (seconds === 60) {
-    seconds = 0;
-    minutes++;
-  }
-  if (minutes === 60) {
-    minutes = 0;
-    hours++;
-  }
-  updateDisplay();
+function displayTime(time) {
+  const hours = Math.floor(time / (1000 * 60 * 60));
+  const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((time % (1000 * 60)) / 1000);
+
+  display.innerText = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
+
+function startTimer() {
+  startTime = Date.now() - elapsedTime;
+  timerInterval = setInterval(() => {
+    elapsedTime = Date.now() - startTime;
+    displayTime(elapsedTime);
+  }, 250); // smoother updates than 1000ms
+}
+
+function pauseTimer() {
+  clearInterval(timerInterval);
+}
+
 startStopBtn.addEventListener("click", () => {
   if (!isRunning) {
-    timer = setInterval(stopwatch, 1000);
+    startTimer();
     startStopBtn.innerText = "Pause";
     isRunning = true;
   } else {
-    clearInterval(timer);
+    pauseTimer();
     startStopBtn.innerText = "Start";
     isRunning = false;
   }
 });
 
 resetBtn.addEventListener("click", () => {
-  clearInterval(timer);
-  [hours, minutes, seconds] = [0, 0, 0];
-  updateDisplay();
-  startStopBtn.innerText = "Start";
+  pauseTimer();
+  elapsedTime = 0;
+  displayTime(elapsedTime);
   isRunning = false;
+  startStopBtn.innerText = "Start";
   laps.innerHTML = "";
 });
 
@@ -56,3 +69,4 @@ lapBtn.addEventListener("click", () => {
     laps.prepend(p);
   }
 });
+
