@@ -1,10 +1,3 @@
-let [hours, minutes, seconds] = [0, 0, 0];
-let display = document.getElementById("display");
-let startStopBtn = document.getElementById("startStop");
-let resetBtn = document.getElementById("reset");
-let lapBtn = document.getElementById("lap");
-let laps = document.getElementById("laps");
-
 let display = document.getElementById("display");
 let startStopBtn = document.getElementById("startStop");
 let resetBtn = document.getElementById("reset");
