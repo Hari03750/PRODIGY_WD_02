@@ -15,39 +15,18 @@ function updateDisplay() {
   display.innerText = `${h}:${m}:${s}`;
 }
 
-let startTime, elapsedTime = 0, timerInterval;
-
-function startTimer() {
-  startTime = Date.now() - elapsedTime;
-  timerInterval = setInterval(() => {
-    elapsedTime = Date.now() - startTime;
-    displayTime(elapsedTime);
-  }, 100);
+function stopwatch() {
+  seconds++;
+  if (seconds === 60) {
+    seconds = 0;
+    minutes++;
+  }
+  if (minutes === 60) {
+    minutes = 0;
+    hours++;
+  }
+  updateDisplay();
 }
-
-function pauseTimer() {
-  clearInterval(timerInterval);
-}
-
-function resetTimer() {
-  clearInterval(timerInterval);
-  elapsedTime = 0;
-  displayTime(elapsedTime);
-}
-
-function displayTime(time) {
-  let milliseconds = Math.floor((time % 1000) / 10);
-  let seconds = Math.floor((time / 1000) % 60);
-  let minutes = Math.floor((time / (1000 * 60)) % 60);
-
-  document.getElementById("display").innerText = 
-    `${pad(minutes)}:${pad(seconds)}:${pad(milliseconds)}`;
-}
-
-function pad(number) {
-  return number < 10 ? '0' + number : number;
-}
-
 startStopBtn.addEventListener("click", () => {
   if (!isRunning) {
     timer = setInterval(stopwatch, 1000);
