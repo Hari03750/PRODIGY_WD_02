@@ -1,4 +1,3 @@
-let display = document.getElementById("display");
 let [hours, minutes, seconds] = [0, 0, 0];
 let display = document.getElementById("display");
 let startStopBtn = document.getElementById("startStop");
