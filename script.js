@@ -1,7 +1,3 @@
-<script>
-    let hours = 0, minutes = 0, seconds = 0;
-    let timer = null;
-    let isRunning = false;
 let display = document.getElementById("display");
 let startStopBtn = document.getElementById("startStop");
 let resetBtn = document.getElementById("reset");
